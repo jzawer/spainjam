@@ -66,6 +66,10 @@ public class Board : MonoBehaviour
 		if (newCell.value <= 0)
 		{
 			UpdatePlayer(newCell);
+			if (newCell.value == CellTypes.Goal)
+			{
+				Debug.Log("Has llegado a la meta pero...");
+			}
 		} else
 		{
 			newCell.NumberComponent.OnPlayerCollision(Player.GetComponentInChildren<Number>(), collision);
