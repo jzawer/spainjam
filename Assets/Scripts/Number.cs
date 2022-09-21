@@ -4,116 +4,130 @@ using UnityEngine;
 
 public class Number : MonoBehaviour
 {
-    public enum CollisionSide { VERTICAL, LEFT, RIGHT };
+	public enum CollisionSide { VERTICAL, LEFT, RIGHT };
 
-    public int initialValue;
+	public int initialValue;
 
-    int decimalValue;
-    bool[] digits = new bool[3];
+	int decimalValue;
+	bool[] digits = new bool[3];
 
-    public int DecimalValue
-    {
-        get => decimalValue;
+	public int DecimalValue
+	{
+		get => decimalValue;
 
-        set
-        {
-            int clampedValue = Mathf.Clamp(value, 0, 4);
-            initialValue = clampedValue;
+		set
+		{
+			int clampedValue = Mathf.Clamp(value, 0, 7);
+			initialValue = clampedValue;
 
-            // update binary representation
+			// update binary representation
 
-            digits[2] = clampedValue % 2 == 1;
-            digits[1] = clampedValue / 2 % 2 == 1;
-            digits[0] = clampedValue / 2 / 2 % 2 == 1;
+			digits[2] = clampedValue % 2 == 1;
+			digits[1] = clampedValue / 2 % 2 == 1;
+			digits[0] = clampedValue / 2 / 2 % 2 == 1;
 
-            decimalValue = clampedValue;
+			decimalValue = clampedValue;
 
-            UpdateVisuals();
-        }
-    }
+			UpdateVisuals();
+		}
+	}
 
-    public bool[] Digits
-    {
-        get => digits;
+	public bool[] Digits
+	{
+		get => digits;
 
-        set
-        {
-            // update decimal value
+		set
+		{
+			UpdateDigits(value);
+		}
+	}
 
-            int newValue = 0;
-            if (digits[2])
-                newValue += 1;
-            if (digits[1])
-                newValue += 2;
-            if (digits[0])
-                newValue += 4;
+	[Header("Visuals")]
+	public SpriteRenderer[] DigitsRenderer = new SpriteRenderer[3];
+	public Sprite Sprite0;
+	public Sprite Sprite1;
 
-            DecimalValue = newValue;
+	#region TESTING
+	[Space(10)]
+	[Header("TESTING")]
+	public bool[] NewDigits;
 
-            digits = value;
+	void Update()
+	{
+		/*if (Input.GetKeyDown(KeyCode.Space))
+		    Digits = NewDigits;*/
+	}
+	#endregion
 
-            UpdateVisuals();
-        }
-    }
+	void Start()
+	{
+		DecimalValue = initialValue;
+		UpdateVisuals();
+	}
 
-    [Header("Visuals")]
-    public SpriteRenderer[] DigitsRenderer = new SpriteRenderer[3];
-    public Sprite Sprite0;
-    public Sprite Sprite1;
+	public void OnPlayerCollision(Number other, CollisionSide collisionSide)
+	{
+		bool[] otherDigits = other.Digits;
+		switch (collisionSide)
+		{
+			case CollisionSide.VERTICAL:
+				Debug.Log($"value: {DecimalValue} | otherValue: {other.DecimalValue} | sum: { other.DecimalValue + DecimalValue }");
+				if (other.DecimalValue + DecimalValue <= 7)
+				{
+					other.DecimalValue += DecimalValue;
+					DecimalValue = 0;
+				}
+				else
+				{
+					Debug.Log("Invalid operation");
+				}
 
-    #region TESTING
-    [Space(10)]
-    [Header("TESTING")]
-    public bool[] NewDigits;
+				break;
+			case CollisionSide.LEFT:
+				Digits[0] = !Digits[0];
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            Digits = NewDigits;
-    }
-    #endregion
+				other.Digits[2] = !otherDigits[2];
+				break;
+			case CollisionSide.RIGHT:
+				Digits[2] = !Digits[2];
 
-    void Start()
-    {
-        DecimalValue = initialValue;
-        UpdateVisuals();
-    }
+				other.Digits[0] = !otherDigits[0];
+				break;
+			default:
+				break;
+		}
 
-    public void OnPlayerCollision(Number other, CollisionSide collisionSide)
-    {
-        switch (collisionSide)
-        {
-            case CollisionSide.VERTICAL:
-                for (int i = 0; i < Digits.Length; i++)
-                    Digits[i] = false;
+		UpdateDigits(Digits);
+		other.UpdateDigits(other.Digits);
+	}
 
-                other.DecimalValue += DecimalValue;
-                break;
-            case CollisionSide.LEFT:
-                Digits[0] = !Digits[0];
+	void UpdateVisuals()
+	{
+		for (int i = 0; i < Digits.Length; i++)
+		{
+			if (Digits[i])
+				DigitsRenderer[i].sprite = Sprite1;
+			else
+				DigitsRenderer[i].sprite = Sprite0;
+		}
+	}
 
-                other.Digits[2] = !other.Digits[2];
-                break;
-            case CollisionSide.RIGHT:
-                Digits[2] = !Digits[2];
+	void UpdateDigits(bool[] newDigits)
+	{
+		// update decimal value
 
-                other.Digits[0] = !other.Digits[0];
-                break;
-            default:
-                break;
-        }
+		int newValue = 0;
+		if (digits[2])
+			newValue += 1;
+		if (digits[1])
+			newValue += 2;
+		if (digits[0])
+			newValue += 4;
 
-        UpdateVisuals();
-    }
+		DecimalValue = newValue;
 
-    void UpdateVisuals()
-    {
-        for (int i = 0; i < Digits.Length; i++)
-        {
-            if (Digits[i])
-                DigitsRenderer[i].sprite = Sprite1;
-            else
-                DigitsRenderer[i].sprite = Sprite0;
-        }
-    }
+		digits = newDigits;
+
+		UpdateVisuals();
+	}
 }
