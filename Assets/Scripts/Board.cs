@@ -63,12 +63,15 @@ public class Board : MonoBehaviour
 
 		if (!newCell) return;
 
-		if (newCell.value <= 0)
+		if (newCell.value < 0)
 		{
 			UpdatePlayer(newCell);
 			if (newCell.value == CellTypes.Goal)
 			{
-				Debug.Log("Has llegado a la meta pero...");
+				if (Player.GetComponentInChildren<Number>().DecimalValue == 4)
+					FindObjectOfType<ScenesManager>().Win();
+				else
+					Debug.Log("I need you to be 100!");
 			}
 		} else
 		{
@@ -100,14 +103,21 @@ public class Board : MonoBehaviour
 				if (cellValue == CellTypes.Player)
 				{
 					cell = Instantiate(CellDefault);
+					cell.GetComponent<Cell>().value = cellValue;
 					PlayerCell = cell.GetComponent<Cell>();
 					UpdatePlayer(PlayerCell);
 				} else if (cellValue == CellTypes.Platform)
 				{
 					cell = Instantiate(CellDefault);
+					cell.GetComponent<Cell>().value = cellValue;
 				} else if (cellValue == CellTypes.Obstacle)
 				{
 					cell = Instantiate(CellDefault);
+				}
+				else if (cellValue == CellTypes.Goal)
+				{
+					cell = Instantiate(CellWithGoal);
+					cell.GetComponent<Cell>().value = cellValue;
 				}
 				else if (cellValue == CellTypes.Empty)
 				{

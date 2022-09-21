@@ -18,7 +18,7 @@ public class Cell : MonoBehaviour
 
 	public Number NumberComponent
 	{
-		get { return NumberObject.GetComponent<Number>(); }
+		get { return NumberObject != null ? NumberObject.GetComponent<Number>() : null; }
 	}
 
 	public int value

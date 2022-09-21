@@ -49,7 +49,7 @@ MonoBehaviour:
   CellSize: 2
   CellDefault: {fileID: 1047769640279217702, guid: 47eb8f5c900d5744f8d1623827fd9fb9, type: 3}
   CellWithNumber: {fileID: 694536183230949635, guid: aefe17c58ca099641835ff9746843e12, type: 3}
-  CellWithGoal: {fileID: 1047769640279217702, guid: 47eb8f5c900d5744f8d1623827fd9fb9, type: 3}
+  CellWithGoal: {fileID: 6966473369861250708, guid: 3ef0ef39b4945f04d9d006e8dd059423, type: 3}
   map: {fileID: 4900000, guid: 9695ef29b1006f0498de4baf97610c78, type: 3}
 --- !u!1001 &8134188304581562618
 PrefabInstance:
