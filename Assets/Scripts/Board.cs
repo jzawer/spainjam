@@ -1,24 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Board : MonoBehaviour
 {
 	private const string AXIS_VERTICAL = "Vertical";
 	private const string AXIS_HORIZONTAL = "Horizontal";
 
-	public GameObject Player;
+	[Header("Board Generation")]
 	public float CellSize = 1f;
 	public GameObject CellDefault;
 	public GameObject CellWithNumber;
 	public GameObject CellWithGoal;
 	public TextAsset map;
+	[Header("Player Movement")]
+	public GameObject Player;
+	public float PlayerMoveDuration;
 
 	private GameObject[,] BoardGrid;
 	private int totalRows;
 	private int totalColumns;
 	private Cell playerCell;
-	private float isInMovement;
+	private Cell newCell;
+	private bool playerIsMoving;
 
 	protected Cell PlayerCell { 
 		get => playerCell;
@@ -40,46 +45,32 @@ public class Board : MonoBehaviour
 
 	private void Update()
 	{
-		// TODO: Cooldown del movimiento
-		if (isInMovement != 0f && isInMovement + Time.deltaTime > .4f)
-		{
-			isInMovement = 0f;
-		} else if (isInMovement != 0f)
-		{
-			isInMovement += Time.deltaTime;
-			return;
-		}
-
 		Number.CollisionSide collision = Number.CollisionSide.VERTICAL;
-		Cell newCell = null;
-		if (Input.GetAxisRaw(AXIS_VERTICAL) != 0)
+
+		if (Input.anyKeyDown)
 		{
-			newCell = GetContinuousCell(PlayerCell, AXIS_VERTICAL, out collision);
-		}
-		else if (Input.GetAxisRaw(AXIS_HORIZONTAL) != 0)
-		{
-			newCell = GetContinuousCell(PlayerCell, AXIS_HORIZONTAL, out collision);
+			if (Input.GetAxisRaw(AXIS_VERTICAL) != 0)
+			{
+				newCell = GetContinuousCell(PlayerCell, AXIS_VERTICAL, out collision);
+			}
+			else if (Input.GetAxisRaw(AXIS_HORIZONTAL) != 0)
+			{
+				newCell = GetContinuousCell(PlayerCell, AXIS_HORIZONTAL, out collision);
+			}
 		}
 
-		if (!newCell) return;
+		if (!newCell || playerIsMoving) return;
 
+		// move Player to new Cell or interact with it (in case of Number)
 		if (newCell.value < 0)
 		{
 			UpdatePlayer(newCell);
-			if (newCell.value == CellTypes.Goal)
-			{
-				if (Player.GetComponentInChildren<Number>().DecimalValue == 4)
-					FindObjectOfType<ScenesManager>().Win();
-				else
-					Debug.Log("I need you to be 100!");
-			}
 		} else
 		{
 			newCell.NumberComponent.OnPlayerCollision(Player.GetComponentInChildren<Number>(), collision);
 		}
 
-		// TODO: Cooldown del movimiento
-		isInMovement = Time.deltaTime;
+		newCell = null;
 	}
 
 	public void GenerateBoardFromMap()
@@ -105,7 +96,6 @@ public class Board : MonoBehaviour
 						cell = Instantiate(CellDefault);
 						cell.GetComponent<Cell>().value = cellValue;
 						PlayerCell = cell.GetComponent<Cell>();
-						UpdatePlayer(PlayerCell);
 						break;
 
 					case CellTypes.Platform:
@@ -140,7 +130,7 @@ public class Board : MonoBehaviour
 		if (!PlayerCell)
 			PlayerCell = BoardGrid[0, 0].GetComponent<Cell>();
 
-		UpdatePlayer(PlayerCell);
+		SetPlayerPosition(PlayerCell);
 	}
 
 	private Vector3 GetWorldPosition(int column, int row)
@@ -175,14 +165,40 @@ public class Board : MonoBehaviour
 		return BoardGrid[newRow, newColumn].GetComponent<Cell>();
 	}
 
+	private void SetPlayerPosition(Cell newCell)
+	{
+		Player.transform.position = new(newCell.transform.position.x, Player.transform.position.y, newCell.transform.position.z);
+
+		PlayerCell = newCell;
+
+		Debug.Log($"PlayerCell: {PlayerCell.Row} : {PlayerCell.Column}");
+	}
+
 	private void UpdatePlayer(Cell newCell)
 	{
+		if (playerIsMoving)
+			return;
+
+		Vector3 newPosition = new(newCell.transform.position.x, Player.transform.position.y, newCell.transform.position.z);
+
+		playerIsMoving = true;
+		Tween playerMoveTween = Player.transform.DOMove(newPosition, PlayerMoveDuration).OnComplete(() =>
+		{
+			playerIsMoving = false;
+
+			// check if cell is goal
+			if (newCell.value == CellTypes.Goal)
+			{
+				if (Player.GetComponentInChildren<Number>().DecimalValue == 4)
+					FindObjectOfType<ScenesManager>().Win();
+				else
+					Debug.Log("I need you to be 100!");
+			}
+		});
+
 		PlayerCell = newCell;
-		Player.transform.position = new Vector3(
-			newCell.transform.position.x,
-			Player.transform.position.y,
-			newCell.transform.position.z
-		);
+
+		this.newCell = null;
 
 		Debug.Log($"PlayerCell: {PlayerCell.Row} : {PlayerCell.Column}");
 	}
