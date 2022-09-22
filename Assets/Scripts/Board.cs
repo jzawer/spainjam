@@ -76,8 +76,6 @@ public class Board : MonoBehaviour
 		} else
 		{
 			newCell.NumberComponent.OnPlayerCollision(Player.GetComponentInChildren<Number>(), collision);
-			var playerNumber = Player.GetComponentInChildren<Number>();
-			Debug.Log($"{ playerNumber.DecimalValue } || {playerNumber.Digits[0]} {playerNumber.Digits[2]} | {playerNumber.Digits[2]}");
 		}
 
 		// TODO: Cooldown del movimiento
@@ -100,39 +98,35 @@ public class Board : MonoBehaviour
 				var position = GetWorldPosition(row, column);
 				var cellValue = mapArray[row, column];
 				GameObject cell;
-				if (cellValue == CellTypes.Player)
+
+				switch (cellValue)
 				{
-					cell = Instantiate(CellDefault);
-					cell.GetComponent<Cell>().value = cellValue;
-					PlayerCell = cell.GetComponent<Cell>();
-					UpdatePlayer(PlayerCell);
-				} else if (cellValue == CellTypes.Platform)
-				{
-					cell = Instantiate(CellDefault);
-					cell.GetComponent<Cell>().value = cellValue;
-				} else if (cellValue == CellTypes.Obstacle)
-				{
-					cell = Instantiate(CellDefault);
-				}
-				else if (cellValue == CellTypes.Goal)
-				{
-					cell = Instantiate(CellWithGoal);
-					cell.GetComponent<Cell>().value = cellValue;
-				}
-				else if (cellValue == CellTypes.Empty)
-				{
-					cell = null;
-				}
-				else
-				{
-					cell = Instantiate(CellWithNumber);
-					cell.GetComponent<Cell>().value = cellValue;
+					case CellTypes.Player:
+						cell = Instantiate(CellDefault);
+						cell.GetComponent<Cell>().value = cellValue;
+						PlayerCell = cell.GetComponent<Cell>();
+						UpdatePlayer(PlayerCell);
+						break;
+
+					case CellTypes.Platform:
+					case CellTypes.Obstacle:
+						cell = Instantiate(CellDefault);
+						break;
+					case CellTypes.Goal:
+						cell = Instantiate(CellWithGoal);
+						break;
+					case CellTypes.Empty:
+						cell = null;
+						break;
+					default:
+						cell = Instantiate(CellWithNumber);
+						break;
 				}
 
 				if (cell)
 				{
 					var cellComponent = cell.GetComponent<Cell>();
-
+					cell.GetComponent<Cell>().value = cellValue;
 					cellComponent.transform.SetParent(this.transform);
 					cell.transform.position = position;
 					cell.transform.Rotate(90f, 0, 0);
