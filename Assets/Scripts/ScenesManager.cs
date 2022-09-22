@@ -34,6 +34,10 @@ public class ScenesManager : MonoBehaviour
 
     public void Win()
     {
+        var musicManager = FindObjectOfType<MusicManager>();
+        if (musicManager)
+            musicManager.Play(SoundNames.CompletedGame);
+
         int targetBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
         if (targetBuildIndex < SceneManager.sceneCountInBuildSettings)

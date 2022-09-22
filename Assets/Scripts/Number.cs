@@ -68,17 +68,19 @@ public class Number : MonoBehaviour
 	public void OnPlayerCollision(Number other, CollisionSide collisionSide)
 	{
 		bool[] otherDigits = other.Digits;
+		string soundToPlay = SoundNames.ValidHorizontalMovement;
 		switch (collisionSide)
 		{
 			case CollisionSide.VERTICAL:
-				Debug.Log($"value: {DecimalValue} | otherValue: {other.DecimalValue} | sum: { other.DecimalValue + DecimalValue }");
 				if (other.DecimalValue + DecimalValue <= 7)
 				{
 					other.DecimalValue += DecimalValue;
 					DecimalValue = 0;
+					soundToPlay = SoundNames.ValidVerticalMovement;
 				}
 				else
 				{
+					soundToPlay = SoundNames.InvalidOperation;
 					Debug.Log("Invalid operation");
 				}
 
@@ -99,6 +101,10 @@ public class Number : MonoBehaviour
 
 		UpdateDigits(Digits);
 		other.UpdateDigits(other.Digits);
+
+		var musicManager = FindObjectOfType<MusicManager>();
+		if (musicManager)
+			musicManager.Play(soundToPlay);
 	}
 
 	void UpdateVisuals()

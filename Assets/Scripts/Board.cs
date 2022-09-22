@@ -24,6 +24,7 @@ public class Board : MonoBehaviour
 	private Cell playerCell;
 	private Cell newCell;
 	private bool playerIsMoving;
+	private MusicManager musicManager;
 
 	protected Cell PlayerCell { 
 		get => playerCell;
@@ -41,6 +42,12 @@ public class Board : MonoBehaviour
 		if (!map || !CellDefault) return;
 
 		GenerateBoardFromMap();
+		musicManager = FindObjectOfType<MusicManager>();
+
+		if (!musicManager) return;
+
+		musicManager.Play(SoundNames.UnresolvedGamePlay);
+		musicManager.Play(SoundNames.StartGame);
 	}
 
 	private void Update()
@@ -59,7 +66,14 @@ public class Board : MonoBehaviour
 			}
 		}
 
-		if (!newCell || playerIsMoving) return;
+		if (playerIsMoving) return;
+
+		if (!newCell || newCell.value == CellTypes.Obstacle)
+		{
+			if (musicManager)
+				musicManager?.Play(SoundNames.InvalidMovement);
+			return;
+		}
 
 		// move Player to new Cell or interact with it (in case of Number)
 		if (newCell.value < 0)
@@ -68,6 +82,7 @@ public class Board : MonoBehaviour
 		} else
 		{
 			newCell.NumberComponent.OnPlayerCollision(Player.GetComponentInChildren<Number>(), collision);
+			ToggleMusic();
 		}
 
 		newCell = null;
@@ -99,12 +114,12 @@ public class Board : MonoBehaviour
 						break;
 
 					case CellTypes.Platform:
-					case CellTypes.Obstacle:
 						cell = Instantiate(CellDefault);
 						break;
 					case CellTypes.Goal:
 						cell = Instantiate(CellWithGoal);
 						break;
+					case CellTypes.Obstacle:
 					case CellTypes.Empty:
 						cell = null;
 						break;
@@ -189,17 +204,31 @@ public class Board : MonoBehaviour
 			// check if cell is goal
 			if (newCell.value == CellTypes.Goal)
 			{
-				if (Player.GetComponentInChildren<Number>().DecimalValue == 4)
+				if (Player.GetComponent<PlayerState>().DecimalValue == 4)
 					FindObjectOfType<ScenesManager>().Win();
-				else
+				else {
+					if (musicManager)
+						musicManager.Play(SoundNames.GoalWithOutCorrectValue);
 					Debug.Log("I need you to be 100!");
+				}
 			}
 		});
 
 		PlayerCell = newCell;
-
 		this.newCell = null;
+	}
 
-		Debug.Log($"PlayerCell: {PlayerCell.Row} : {PlayerCell.Column}");
+	private void ToggleMusic()
+	{
+		if (musicManager == null)
+			return;
+
+		if (Player.GetComponent<PlayerState>().DecimalValue == 4)
+		{
+			musicManager.DOFadeOutTo(SoundNames.UnresolvedGamePlay, SoundNames.ResolvedGamePlay, 1f);
+		} else
+		{
+			musicManager.DOFadeOutTo(SoundNames.ResolvedGamePlay, SoundNames.UnresolvedGamePlay, 1f);
+		}
 	}
 }

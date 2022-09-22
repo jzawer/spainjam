@@ -4,5 +4,11 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
-	public Number NumberComponent { get { return GetComponentInChildren<Number>(); } }
+	public Number numberComponent;
+	public int DecimalValue { get { return numberComponent != null ? numberComponent.DecimalValue : 0; } }
+
+	private void Start()
+	{
+		numberComponent = GetComponentInChildren<Number>();
+	}
 }
