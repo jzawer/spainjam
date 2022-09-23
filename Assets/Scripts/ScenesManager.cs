@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class ScenesManager : MonoBehaviour
 {
     public static ScenesManager Instance;
+
+    public CanvasGroup canvasGroup;
+    public float FadeDuration = 2f;
 
     void Awake()
     {
@@ -26,8 +30,11 @@ public class ScenesManager : MonoBehaviour
     void RestartLevel()
     {
         // don't restart level if we are on the main menu
-        //if (SceneManager.GetActiveScene().buildIndex == 0)
-        //    return;
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            FadeToLevel(1);
+            return;
+        }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -41,8 +48,17 @@ public class ScenesManager : MonoBehaviour
         int targetBuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
         if (targetBuildIndex < SceneManager.sceneCountInBuildSettings)
-            SceneManager.LoadScene(targetBuildIndex);
+            FadeToLevel(targetBuildIndex);
         else
-            SceneManager.LoadScene(0);
+            FadeToLevel(1);
+    }
+
+     public void FadeToLevel(int levelIndex)
+    {
+        canvasGroup.DOFade(1f, FadeDuration / 2).OnComplete(() =>
+        {
+            canvasGroup.DOFade(0f, FadeDuration / 2);
+            SceneManager.LoadScene(levelIndex);
+        });
     }
 }
