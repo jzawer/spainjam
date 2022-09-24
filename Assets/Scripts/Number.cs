@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Number : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Number : MonoBehaviour
 	public int initialValue;
 
 	int decimalValue;
-	bool[] digits = new bool[3];
+	int[] digits = new int[3];
 
 	public int DecimalValue
 	{
@@ -22,9 +23,9 @@ public class Number : MonoBehaviour
 
 			// update binary representation
 
-			digits[2] = clampedValue % 2 == 1;
-			digits[1] = clampedValue / 2 % 2 == 1;
-			digits[0] = clampedValue / 2 / 2 % 2 == 1;
+			digits[2] = clampedValue % 2 == 1 ? 1 : 0;
+			digits[1] = clampedValue / 2 % 2 == 1 ? 1 : 0;
+			digits[0] = clampedValue / 2 / 2 % 2 == 1 ? 1 : 0;
 
 			decimalValue = clampedValue;
 
@@ -32,7 +33,7 @@ public class Number : MonoBehaviour
 		}
 	}
 
-	public bool[] Digits
+	public int[] Digits
 	{
 		get => digits;
 
@@ -46,6 +47,7 @@ public class Number : MonoBehaviour
 	public SpriteRenderer[] DigitsRenderer = new SpriteRenderer[3];
 	public Sprite Sprite0;
 	public Sprite Sprite1;
+	public TMP_Text numberText;
 
 	#region TESTING
 	[Space(10)]
@@ -67,7 +69,6 @@ public class Number : MonoBehaviour
 
 	public void OnPlayerCollision(Number other, CollisionSide collisionSide)
 	{
-		bool[] otherDigits = other.Digits;
 		string soundToPlay = SoundNames.ValidHorizontalMovement;
 		switch (collisionSide)
 		{
@@ -86,14 +87,14 @@ public class Number : MonoBehaviour
 
 				break;
 			case CollisionSide.LEFT:
-				Digits[0] = !Digits[0];
+				Digits[0] = Digits[0] == 1 ? 0 : 1;
 
-				other.Digits[2] = !otherDigits[2];
+				other.Digits[2] = other.Digits[2] == 1 ? 0 : 1;
 				break;
 			case CollisionSide.RIGHT:
-				Digits[2] = !Digits[2];
+				Digits[2] = Digits[2] == 1 ? 0 : 1;
 
-				other.Digits[0] = !otherDigits[0];
+				other.Digits[0] = other.Digits[0] == 1 ? 0 : 1;
 				break;
 			default:
 				break;
@@ -109,28 +110,23 @@ public class Number : MonoBehaviour
 
 	void UpdateVisuals()
 	{
-		for (int i = 0; i < Digits.Length; i++)
-		{
-			if (Digits[i])
-				DigitsRenderer[i].sprite = Sprite1;
-			else
-				DigitsRenderer[i].sprite = Sprite0;
-		}
-	}
+		//for (int i = 0; i < Digits.Length; i++)
+		//{
+		//	if (Digits[i])
+		//		DigitsRenderer[i].sprite = Sprite1;
+		//	else
+		//		DigitsRenderer[i].sprite = Sprite0;
+		//}
 
-	void UpdateDigits(bool[] newDigits)
+		numberText.text =
+			Digits[0].ToString() + Digits[1].ToString() + Digits[2].ToString();
+    }
+
+	void UpdateDigits(int[] newDigits)
 	{
 		// update decimal value
 
-		int newValue = 0;
-		if (digits[2])
-			newValue += 1;
-		if (digits[1])
-			newValue += 2;
-		if (digits[0])
-			newValue += 4;
-
-		DecimalValue = newValue;
+		decimalValue = digits[2] + digits[1] * 2 + digits[0] * 4;
 
 		digits = newDigits;
 

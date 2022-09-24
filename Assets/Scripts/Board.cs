@@ -116,6 +116,7 @@ public class Board : MonoBehaviour
 						break;
 					case CellTypes.Goal:
 						cell = Instantiate(CellWithGoal);
+						cell.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
 						break;
 					case CellTypes.Obstacle:
 					case CellTypes.Empty:
@@ -123,6 +124,7 @@ public class Board : MonoBehaviour
 						break;
 					default:
 						cell = Instantiate(CellWithNumber);
+						cell.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
 						break;
 				}
 
