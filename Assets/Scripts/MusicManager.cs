@@ -2,13 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using DG.Tweening;
 
 public class MusicManager : MonoBehaviour
 {
 	public static MusicManager Instance;
 
-	public Sound[] Sounds = new Sound[9]
+	public AudioMixerGroup mixer;
+	public Sound[] Sounds = new Sound[10]
 	{
 		new Sound(SoundNames.UnresolvedGamePlay),
 		new Sound(SoundNames.ResolvedGamePlay),
@@ -18,13 +20,15 @@ public class MusicManager : MonoBehaviour
 		new Sound(SoundNames.ValidVerticalMovement),
 		new Sound(SoundNames.InvalidMovement),
 		new Sound(SoundNames.InvalidOperation),
-		new Sound(SoundNames.PlayerEffect)
-	};
+		new Sound(SoundNames.PlayerEffect),
+		new Sound(SoundNames.PlayerMovement)
+};
 
     void Awake()
 	{
 		if (Instance == null)
 		{
+			InitializeSounds();
 			Instance = this;
 		}
 		else
@@ -34,13 +38,11 @@ public class MusicManager : MonoBehaviour
 		}
 
 		DontDestroyOnLoad(gameObject);
-
-		InitializeSounds();
 	}
 
 	private void Start()
 	{
-		Play(SoundNames.UnresolvedGamePlay);
+		//Play(SoundNames.UnresolvedGamePlay);
 	}
 
 	private void InitializeSounds()
@@ -51,9 +53,11 @@ public class MusicManager : MonoBehaviour
 			{
 				sound.Source = gameObject.AddComponent<AudioSource>();
 				sound.Source.clip = sound.Clip;
-
 				sound.Source.volume = sound.Volume;
 				sound.Source.loop = sound.Loop;
+
+				if (mixer != null)
+					sound.Source.outputAudioMixerGroup = mixer;
 			}
 		}
 	}
@@ -69,7 +73,9 @@ public class MusicManager : MonoBehaviour
 		if (sound == null || sound.Source == null) return;
 
 		sound.Source.volume = sound.Volume;
-		sound.Source.Play();
+
+		if (!sound.Source.isPlaying)
+			sound.Source.Play();
 	}
 
 	public void Stop(string name)

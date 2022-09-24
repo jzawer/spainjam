@@ -38,6 +38,7 @@ public class SoundNames
 	public const string ValidVerticalMovement = "ValidVerticalMovement";
 	public const string InvalidMovement = "InvalidMovement";
 	public const string InvalidOperation = "InvalidOperation";
-	public const string PlayerEffect = "PlayerEffect";
+	public const string PlayerMovement = "PlayerMovement";
+	public const string PlayerEffect = "PlayerEffect"; 
 	public const string GoalWithOutCorrectValue = "GoalWithOutCorrectValue";
 }

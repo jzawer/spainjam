@@ -22,7 +22,7 @@ public class Board : MonoBehaviour
 	private int totalRows;
 	private int totalColumns;
 	private Cell playerCell;
-	private Cell newCell;
+	private List<CellMovement> NextMovementCells = new List<CellMovement>();
 	private bool playerIsMoving;
 	private MusicManager musicManager;
 
@@ -42,50 +42,48 @@ public class Board : MonoBehaviour
 		if (!map || !CellDefault) return;
 
 		GenerateBoardFromMap();
-		musicManager = FindObjectOfType<MusicManager>();
+		musicManager = MusicManager.Instance;
 
 		if (!musicManager) return;
 
-		musicManager.Play(SoundNames.UnresolvedGamePlay);
 		musicManager.Play(SoundNames.StartGame);
+		musicManager.Play(SoundNames.PlayerEffect);
 	}
 
 	private void Update()
 	{
-		Number.CollisionSide collision = Number.CollisionSide.VERTICAL;
-
-		if (Input.anyKeyDown)
+		if (NextMovementCells.Count >= 2)
 		{
-			if (Input.GetAxisRaw(AXIS_VERTICAL) != 0)
-			{
-				newCell = GetContinuousCell(PlayerCell, AXIS_VERTICAL, out collision);
-			}
-			else if (Input.GetAxisRaw(AXIS_HORIZONTAL) != 0)
-			{
-				newCell = GetContinuousCell(PlayerCell, AXIS_HORIZONTAL, out collision);
-			}
-		}
+			if (!playerIsMoving)
+				DoNextMovement();
 
-		if (playerIsMoving) return;
-
-		if (!newCell || newCell.value == CellTypes.Obstacle)
-		{
-			if (musicManager)
-				musicManager?.Play(SoundNames.InvalidMovement);
 			return;
 		}
 
-		// move Player to new Cell or interact with it (in case of Number)
-		if (newCell.value < 0)
+		CellMovement nextMovement = null;
+		Cell playerCell = NextMovementCells.Count > 0 ? NextMovementCells[^1].cell : PlayerCell;
+
+		if (Input.anyKeyDown)
 		{
-			UpdatePlayer(newCell);
-		} else
-		{
-			newCell.NumberComponent.OnPlayerCollision(Player.GetComponentInChildren<Number>(), collision);
-			ToggleMusic();
+			var verticalAxisInput = Input.GetAxisRaw(AXIS_VERTICAL);
+			var horizontalAxisInput = Input.GetAxisRaw(AXIS_HORIZONTAL);
+
+			if (verticalAxisInput != 0)
+			{
+				nextMovement = GetContinuousCell(playerCell, AXIS_VERTICAL);
+			}
+			else if (horizontalAxisInput != 0)
+			{
+				nextMovement = GetContinuousCell(playerCell, AXIS_HORIZONTAL);
+			}
 		}
 
-		newCell = null;
+		if (nextMovement != null && nextMovement.cell != null)
+			NextMovementCells.Add(nextMovement);
+
+		if (playerIsMoving || NextMovementCells.Count <= 0) return;
+
+		DoNextMovement();
 	}
 
 	public void GenerateBoardFromMap()
@@ -153,8 +151,9 @@ public class Board : MonoBehaviour
 		return new Vector3(row, 0, column) * CellSize;
 	}
 
-	private Cell GetContinuousCell(Cell currentCell, string axisName, out Number.CollisionSide collision)
+	private CellMovement GetContinuousCell(Cell currentCell, string axisName)
 	{
+		var cellMovement = new CellMovement();
 		var axisInput = Input.GetAxisRaw(axisName: axisName);
 		var newColumn = currentCell.Column;
 		var newRow = currentCell.Row;
@@ -168,16 +167,18 @@ public class Board : MonoBehaviour
 			newRow += (int)axisInput;
 		}
 
-		collision = axisName == AXIS_VERTICAL ? Number.CollisionSide.VERTICAL : axisInput < 0 ? Number.CollisionSide.RIGHT : Number.CollisionSide.LEFT;
+		cellMovement.collisionSide = axisName == AXIS_VERTICAL ? Number.CollisionSide.VERTICAL : axisInput < 0 ? Number.CollisionSide.RIGHT : Number.CollisionSide.LEFT;
 
-		if (newRow >= totalRows || newRow < 0) return null;
-		if (newColumn >= totalColumns || newColumn < 0) return null;
+		if (newRow >= totalRows || newRow < 0) return cellMovement;
+		if (newColumn >= totalColumns || newColumn < 0) return cellMovement;
 
 		GameObject cell = BoardGrid[newRow, newColumn];
 
-		if (!cell) return null;
+		if (!cell) return cellMovement;
 
-		return BoardGrid[newRow, newColumn].GetComponent<Cell>();
+		cellMovement.cell = BoardGrid[newRow, newColumn].GetComponent<Cell>();
+
+		return cellMovement;
 	}
 
 	private void SetPlayerPosition(Cell newCell)
@@ -197,9 +198,11 @@ public class Board : MonoBehaviour
 		Vector3 newPosition = new(newCell.transform.position.x, Player.transform.position.y, newCell.transform.position.z);
 
 		playerIsMoving = true;
+		musicManager.Play(SoundNames.PlayerMovement);
 		Tween playerMoveTween = Player.transform.DOMove(newPosition, PlayerMoveDuration).OnComplete(() =>
 		{
 			playerIsMoving = false;
+			//musicManager.Play(SoundNames.PlayerEffect);
 
 			// check if cell is goal
 			if (newCell.value == CellTypes.Goal)
@@ -215,7 +218,6 @@ public class Board : MonoBehaviour
 		});
 
 		PlayerCell = newCell;
-		this.newCell = null;
 	}
 
 	private void ToggleMusic()
@@ -231,4 +233,29 @@ public class Board : MonoBehaviour
 			musicManager.DOFadeOutTo(SoundNames.ResolvedGamePlay, SoundNames.UnresolvedGamePlay, 1f);
 		}
 	}
+
+	private void DoNextMovement()
+	{
+		var nextMovementCell = NextMovementCells[0];
+		if (nextMovementCell.cell == null || nextMovementCell.cell.value == CellTypes.Obstacle)
+		{
+			if (musicManager)
+				musicManager.Play(SoundNames.InvalidMovement);
+			return;
+		}
+
+		// move Player to new Cell or interact with it (in case of Number)
+		if (nextMovementCell.cell.value < 0)
+		{
+			UpdatePlayer(nextMovementCell.cell);
+		}
+		else
+		{
+			nextMovementCell.cell.NumberComponent.OnPlayerCollision(Player.GetComponentInChildren<Number>(), nextMovementCell.collisionSide);
+			ToggleMusic();
+		}
+
+		NextMovementCells.RemoveAt(0);
+	}
 }
+
