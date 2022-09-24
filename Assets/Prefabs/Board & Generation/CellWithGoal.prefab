@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 353026495906696006, guid: 47eb8f5c900d5744f8d1623827fd9fb9, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4460097678107279617, guid: 547249d600a846e40b09d5d0fe58758d, type: 3}
     - target: {fileID: 1047769640279217702, guid: 47eb8f5c900d5744f8d1623827fd9fb9, type: 3}
       propertyPath: m_Name
       value: CellWithGoal

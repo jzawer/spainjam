@@ -21,7 +21,7 @@ public class MusicManager : MonoBehaviour
 		new Sound(SoundNames.PlayerEffect)
 	};
 
-	void Awake()
+    void Awake()
 	{
 		if (Instance == null)
 		{

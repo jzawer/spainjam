@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 353026495906696006, guid: 47eb8f5c900d5744f8d1623827fd9fb9, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8553392094828675512, guid: 392686e953b2d5645bbc2d9e07e09f48, type: 3}
     - target: {fileID: 1047769640279217702, guid: 47eb8f5c900d5744f8d1623827fd9fb9, type: 3}
       propertyPath: m_Name
       value: CellWithNumber
@@ -91,7 +95,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4949152525558180682, guid: 1e284ee79bea64c4695d8074131c1415, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.286
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4949152525558180682, guid: 1e284ee79bea64c4695d8074131c1415, type: 3}
       propertyPath: m_LocalRotation.w
