@@ -25,6 +25,7 @@ public class Board : MonoBehaviour
 	private List<CellMovement> NextMovementCells = new List<CellMovement>();
 	private bool playerIsMoving;
 	private MusicManager musicManager;
+	private List<Cell> currentNeighbours = new List<Cell>();
 
 	protected Cell PlayerCell { 
 		get => playerCell;
@@ -187,6 +188,7 @@ public class Board : MonoBehaviour
 	{
 		Player.transform.position = new(newCell.transform.position.x, Player.transform.position.y, newCell.transform.position.z);
 
+		CheckNeighboursCells(newCell);
 		PlayerCell = newCell;
 
 		Debug.Log($"PlayerCell: {PlayerCell.Row} : {PlayerCell.Column}");
@@ -204,7 +206,6 @@ public class Board : MonoBehaviour
 		Tween playerMoveTween = Player.transform.DOMove(newPosition, PlayerMoveDuration).OnComplete(() =>
 		{
 			playerIsMoving = false;
-			//musicManager.Play(SoundNames.PlayerEffect);
 
 			// check if cell is goal
 			if (newCell.value == CellTypes.Goal)
@@ -217,6 +218,7 @@ public class Board : MonoBehaviour
 					Debug.Log("I need you to be 100!");
 				}
 			}
+			CheckNeighboursCells(newCell);
 		});
 
 		PlayerCell = newCell;
@@ -258,6 +260,51 @@ public class Board : MonoBehaviour
 		}
 
 		NextMovementCells.RemoveAt(0);
+	}
+
+	private void ResetNeighbours()
+    {
+		currentNeighbours.ForEach(cell =>
+		{
+			var animator = cell.GetComponent<Animator>();
+			if (animator != null)
+			{
+				animator.SetTrigger("Trigger");
+			}
+		});
+		currentNeighbours.Clear();
+	}
+
+	private void CheckNeighboursCells(Cell cell)
+	{
+		ResetNeighbours();
+		for (int r = -1; r <= 1; r++)
+		{
+			for (int c = -1; c <= 1; c++)
+			{
+				if (r == 0 && c == 0 || (c != 0 && r != 0)) continue;
+
+				var neighbourRow = cell.Row + c;
+				var neighbourColumn = cell.Column + r;
+
+				if (neighbourRow < 0 || neighbourRow >= totalRows || neighbourColumn < 0 || neighbourColumn >= totalColumns) continue;
+
+				var neighbourCell = BoardGrid[neighbourRow, neighbourColumn].GetComponent<Cell>();
+
+				if (neighbourCell == cell)
+					continue;
+
+				if (neighbourCell.value >= 0)
+                {
+					var animator = neighbourCell.GetComponent<Animator>();
+					if (animator != null)
+                    {
+						animator.SetTrigger("Trigger");
+						currentNeighbours.Add(neighbourCell);
+					}
+                }
+			}
+		}
 	}
 }
 
