@@ -32,7 +32,6 @@ public class ScenesManager : MonoBehaviour
         // don't restart level if we are on the main menu
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            FadeToLevel(1);
             return;
         }
 
@@ -41,7 +40,7 @@ public class ScenesManager : MonoBehaviour
 
     public void Win()
     {
-        var musicManager = FindObjectOfType<MusicManager>();
+        var musicManager = MusicManager.Instance;
         if (musicManager)
             musicManager.Play(SoundNames.CompletedGame);
 
