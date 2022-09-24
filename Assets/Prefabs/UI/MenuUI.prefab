@@ -850,14 +850,6 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1687243927462551324, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 160
-      objectReference: {fileID: 0}
-    - target: {fileID: 1687243927462551324, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1687243927462551324, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -868,22 +860,6 @@ PrefabInstance:
     - target: {fileID: 1687243927462551324, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1687243927462551324, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071067
-      objectReference: {fileID: 0}
-    - target: {fileID: 1687243927462551324, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1687243927462551324, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1687243927462551324, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.70710695
       objectReference: {fileID: 0}
     - target: {fileID: 1687243927462551324, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -906,12 +882,24 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 3415319807101946833, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3415319807101946833, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3415319807101946833, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4510762978021578552, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
       propertyPath: m_Name
       value: VolumenSlider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818761840166066026, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6818761840166066026, guid: 95213a7d048b5dd40973e8f287f0b30f, type: 3}
       propertyPath: m_AnchorMax.y

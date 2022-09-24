@@ -5,11 +5,16 @@ using UnityEngine.SceneManagement;
 public class MenuController : MonoBehaviour
 {
     private ScenesManager scenesManager;
+    private MusicManager musicManager;
     public CanvasGroup canvas;
 
-    private void Awake()
+    private void Start()
     {
         scenesManager = FindObjectOfType<ScenesManager>();
+        musicManager = MusicManager.Instance;
+
+        if (musicManager != null)
+            musicManager.Play(SoundNames.Menu);
     }
 
 
@@ -27,6 +32,10 @@ public class MenuController : MonoBehaviour
 
     private void HideMenu()
     {
-        canvas.DOFade(0, .5f);
+        canvas.DOFade(0, .5f).OnComplete(() =>
+        {
+            if (musicManager != null)
+                musicManager.Stop(SoundNames.Menu);
+        });
     }
 }

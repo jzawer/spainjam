@@ -42,8 +42,8 @@ public class Board : MonoBehaviour
 	{
 		if (!map || !CellDefault) return;
 
-		GenerateBoardFromMap();
 		musicManager = MusicManager.Instance;
+		GenerateBoardFromMap();
 
 		if (!musicManager) return;
 
@@ -270,6 +270,7 @@ public class Board : MonoBehaviour
 			if (animator != null)
 			{
 				animator.SetTrigger("Trigger");
+				musicManager.Play(SoundNames.CellDown);
 			}
 		});
 		currentNeighbours.Clear();
@@ -301,6 +302,9 @@ public class Board : MonoBehaviour
                     {
 						animator.SetTrigger("Trigger");
 						currentNeighbours.Add(neighbourCell);
+
+						if (musicManager)
+							musicManager.Play(SoundNames.CellUp);
 					}
                 }
 			}

@@ -41,4 +41,7 @@ public class SoundNames
 	public const string PlayerMovement = "PlayerMovement";
 	public const string PlayerEffect = "PlayerEffect"; 
 	public const string GoalWithOutCorrectValue = "GoalWithOutCorrectValue";
+	public const string Menu = "Menu";
+	public const string CellDown = "CellDown";
+	public const string CellUp = "CellUp";
 }

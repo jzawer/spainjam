@@ -10,7 +10,7 @@ public class MusicManager : MonoBehaviour
 	public static MusicManager Instance;
 
 	public AudioMixerGroup mixer;
-	public Sound[] Sounds = new Sound[10]
+	public Sound[] Sounds = new Sound[13]
 	{
 		new Sound(SoundNames.UnresolvedGamePlay),
 		new Sound(SoundNames.ResolvedGamePlay),
@@ -21,7 +21,10 @@ public class MusicManager : MonoBehaviour
 		new Sound(SoundNames.InvalidMovement),
 		new Sound(SoundNames.InvalidOperation),
 		new Sound(SoundNames.PlayerEffect),
-		new Sound(SoundNames.PlayerMovement)
+		new Sound(SoundNames.PlayerMovement),
+		new Sound(SoundNames.Menu),
+		new Sound(SoundNames.CellDown),
+		new Sound(SoundNames.CellUp)
 };
 
     void Awake()
