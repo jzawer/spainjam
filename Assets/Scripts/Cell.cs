@@ -15,6 +15,7 @@ public class Cell : MonoBehaviour
 	private int Value;
 
 	public GameObject NumberObject;
+	public GameObject Platform;
 
 	public Number NumberComponent
 	{
@@ -35,4 +36,10 @@ public class Cell : MonoBehaviour
 		NumberObject.SetActive(newValue >= 0);
 		NumberComponent.DecimalValue = newValue;
 	}
+
+    private void Start()
+    {
+        int rand = Random.Range(0, 4) * 90;
+        Platform.transform.Rotate(new Vector3(0, rand));
+    }
 }
