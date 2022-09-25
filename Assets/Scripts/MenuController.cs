@@ -15,8 +15,8 @@ public class MenuController : MonoBehaviour
 
         if (musicManager != null)
         {
-            musicManager.Play(SoundNames.Menu);
-            StartCoroutine(musicManager.PlayDelayedBySound(SoundNames.Menu, SoundNames.MenuLoop));
+            musicManager.Play(SoundNames.StartMenu_Start);
+            StartCoroutine(musicManager.PlayDelayedBySound(SoundNames.StartMenu_Start, SoundNames.StartMenu_Loop));
         }
     }
 
@@ -38,8 +38,8 @@ public class MenuController : MonoBehaviour
         {
             if (musicManager != null)
             {
-                musicManager.Stop(SoundNames.Menu);
-                musicManager.Stop(SoundNames.MenuLoop);
+                musicManager.Stop(SoundNames.StartMenu_Start);
+                musicManager.Stop(SoundNames.StartMenu_Loop);
             }
         });
     }

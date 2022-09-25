@@ -51,9 +51,9 @@ public class Board : MonoBehaviour
 
 		if (!musicManager) return;
 
-		musicManager.Play(SoundNames.StartGame);
-		musicManager.Play(SoundNames.UnresolvedGamePlay);
-		musicManager.Play(SoundNames.PlayerEffect);
+		musicManager.Play(SoundNames.Level_Start);
+		musicManager.Play(SoundNames.Gameplay_UnresolvedLoop);
+		musicManager.Play(SoundNames.Player_Waiting);
 	}
 
 	private void Update()
@@ -229,7 +229,7 @@ public class Board : MonoBehaviour
             default:
                 break;
         }
-        musicManager.Play(SoundNames.PlayerMovement);
+        musicManager.Play(SoundNames.Player_Move);
 		Tween playerMoveTween = Player.transform.DOMove(newPosition, PlayerMoveDuration).OnComplete(() =>
 		{
 			playerIsMoving = false;
@@ -241,15 +241,15 @@ public class Board : MonoBehaviour
                 {
 					if (musicManager)
                     {
-						musicManager.Stop(SoundNames.ResolvedGamePlay);
-						musicManager.Play(SoundNames.CompletedGame);
+						musicManager.Stop(SoundNames.Gameplay_ResolvedLoop);
+						musicManager.Play(SoundNames.Level_Completed);
 					}
 
 					FindObjectOfType<ScenesManager>().Win();
 				}
 				else {
-					if (musicManager)
-						musicManager.Play(SoundNames.GoalWithOutCorrectValue);
+					/*if (musicManager)
+						musicManager.Play(SoundNames.GoalWithOutCorrectValue);*/
 					Debug.Log("I need you to be 100!");
 				}
 			}
@@ -267,10 +267,10 @@ public class Board : MonoBehaviour
 
 		if (Player.GetComponent<PlayerState>().DecimalValue == 4)
 		{
-			musicManager.ChangeClipTo(SoundNames.UnresolvedGamePlay, SoundNames.ResolvedGamePlay, 1f);
+			musicManager.ChangeClipTo(SoundNames.Gameplay_UnresolvedLoop, SoundNames.Gameplay_ResolvedLoop, 1f);
 		} else
 		{
-			musicManager.ChangeClipTo(SoundNames.ResolvedGamePlay, SoundNames.UnresolvedGamePlay, 1f);
+			musicManager.ChangeClipTo(SoundNames.Gameplay_ResolvedLoop, SoundNames.Gameplay_UnresolvedLoop, 1f);
 		}
 	}
 
@@ -280,7 +280,7 @@ public class Board : MonoBehaviour
 		if (nextMovementCell.cell == null || nextMovementCell.cell.value == CellTypes.Obstacle)
 		{
 			if (musicManager)
-				musicManager.Play(SoundNames.InvalidMovement);
+				musicManager.Play(SoundNames.Invalid_Action);
 			return;
 		}
 
@@ -336,7 +336,7 @@ public class Board : MonoBehaviour
 		if (animator == null) return;
 
 		if (musicManager && animator.GetBool("Up") != up)
-			musicManager.Play(up ? SoundNames.CellUp : SoundNames.CellDown);
+			musicManager.Play(up ? SoundNames.Number_Up : SoundNames.Number_Down);
 
 		animator.SetBool("Up", up);
 	}

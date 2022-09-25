@@ -1,34 +1,36 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using DG.Tweening;
 
 public class MusicManager : MonoBehaviour
 {
 	public static MusicManager Instance;
 
 	public AudioMixerGroup mixer;
-	public Sound[] Sounds = new Sound[14]
+	public Sound[] Sounds = new Sound[18]
 	{
-		new Sound(SoundNames.UnresolvedGamePlay),
-		new Sound(SoundNames.ResolvedGamePlay),
-		new Sound(SoundNames.StartGame),
-		new Sound(SoundNames.CompletedGame),
-		new Sound(SoundNames.ValidHorizontalMovement),
-		new Sound(SoundNames.ValidVerticalMovement),
-		new Sound(SoundNames.InvalidMovement),
-		new Sound(SoundNames.InvalidOperation),
-		new Sound(SoundNames.PlayerEffect),
-		new Sound(SoundNames.PlayerMovement),
-		new Sound(SoundNames.Menu),
-		new Sound(SoundNames.MenuLoop),
-		new Sound(SoundNames.CellDown),
-		new Sound(SoundNames.CellUp)
+		new Sound(SoundNames.Player_Move),
+		new Sound(SoundNames.Player_Waiting),
+		new Sound(SoundNames.Interaction_Horizontal),
+		new Sound(SoundNames.Interaction_Vertical),
+		new Sound(SoundNames.Invalid_Action),
+		new Sound(SoundNames.Number_Up),
+		new Sound(SoundNames.Number_Down),
+		new Sound(SoundNames.Level_Start),
+		new Sound(SoundNames.Player_Get_100),
+		new Sound(SoundNames.Player_Loose_100),
+		new Sound(SoundNames.Level_Completed),
+		new Sound(SoundNames.StartMenu_Play),
+		new Sound(SoundNames.StartMenu_Hover),
+		new Sound(SoundNames.StartMenu_Quit),
+		new Sound(SoundNames.StartMenu_Start),
+		new Sound(SoundNames.StartMenu_Loop),
+		new Sound(SoundNames.Gameplay_UnresolvedLoop),
+		new Sound(SoundNames.Gameplay_ResolvedLoop)
 };
 
-    void Awake()
+	void Awake()
 	{
 		if (Instance == null)
 		{

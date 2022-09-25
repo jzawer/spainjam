@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7940123833493300085}
-  - component: {fileID: 5874859774085955473}
+  - component: {fileID: 6280949499406782057}
   m_Layer: 0
   m_Name: MusicManager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5874859774085955473
+--- !u!114 &6280949499406782057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,87 +46,111 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mixer: {fileID: 24300002, guid: be97831e904a5c548b94af8de314c710, type: 2}
   Sounds:
-  - Name: UnresolvedGamePlay
-    Clip: {fileID: 8300000, guid: 7db755478a2b0764d96651a36a4bb0d0, type: 3}
-    Volume: 1
-    SpatialBlend: 1
-    Loop: 1
-    Source: {fileID: 0}
-  - Name: ResolvedGamePlay
-    Clip: {fileID: 8300000, guid: caf35904a6c990045a77871c6a496689, type: 3}
-    Volume: 1
-    SpatialBlend: 1
-    Loop: 1
-    Source: {fileID: 0}
-  - Name: StartGame
-    Clip: {fileID: 8300000, guid: ad8dda6fa03b1ba4eb6475c01829d88e, type: 3}
+  - Name: Player_Move
+    Clip: {fileID: 8300000, guid: 364999f66d5426140adea8cac31b0d6f, type: 3}
     Volume: 1
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
-  - Name: CompletedGame
+  - Name: Player_Waiting
+    Clip: {fileID: 8300000, guid: 2899099b4075d4d47b4d1d7654b67439, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Interaction_Horizontal
+    Clip: {fileID: 8300000, guid: 6f21cb06b518d6f4dbdee7a8739758b3, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Interaction_Vertical
+    Clip: {fileID: 8300000, guid: a5204dc608f267f4794320df5702635a, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Invalid_Action
+    Clip: {fileID: 8300000, guid: b2de5e4258778db41991f302cf14f22c, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Number_Up
+    Clip: {fileID: 8300000, guid: 21a4f54fb37577f42b9e4e1213428709, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Number_Down
+    Clip: {fileID: 8300000, guid: acbc4e4d53ce41945a44710f1271d4be, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Level_Start
+    Clip: {fileID: 8300000, guid: 1b7bb5ea4f38c3641b58be3e9c96ab11, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Player_Get_100
+    Clip: {fileID: 8300000, guid: a138fdc4bc441c449b563febd32654f1, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Player_Loose_100
+    Clip: {fileID: 8300000, guid: 4bb6a3095dac753459ba29edaf600a35, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Level_Completed
+    Clip: {fileID: 8300000, guid: edbc0859188177c45830bea7cff40103, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: StartMenu_Play
+    Clip: {fileID: 8300000, guid: 69a525d344d014d41b5fdda93fd8d059, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: StartMenu_Hover
+    Clip: {fileID: 8300000, guid: 145a9fbc68020da49b9c7533f9b00719, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: StartMenu_Quit
     Clip: {fileID: 0}
     Volume: 1
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
-  - Name: ValidHorizontalMovement
-    Clip: {fileID: 8300000, guid: a7337f39b6167544ca87093ed727806c, type: 3}
+  - Name: StartMenu_Start
+    Clip: {fileID: 8300000, guid: f404bef3b18cc224b9cd2bb3218a4ca0, type: 3}
     Volume: 1
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
-  - Name: ValidVerticalMovement
-    Clip: {fileID: 8300000, guid: 17055e6d4c06db04982737107e4f4a9f, type: 3}
+  - Name: StartMenu_Loop
+    Clip: {fileID: 8300000, guid: aa80a3fb587043942995854a46b4b7c5, type: 3}
     Volume: 1
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
-  - Name: InvalidMovement
-    Clip: {fileID: 8300000, guid: 89ef8d2f9a788bb4fbc3f1c8e45b6b9a, type: 3}
+  - Name: Gameplay_UnresolvedLoop
+    Clip: {fileID: 8300000, guid: 02e9143111ee004458896d0b15ea4d84, type: 3}
     Volume: 1
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
-  - Name: InvalidOperation
-    Clip: {fileID: 8300000, guid: 89ef8d2f9a788bb4fbc3f1c8e45b6b9a, type: 3}
+  - Name: Gameplay_ResolvedLoop
+    Clip: {fileID: 8300000, guid: 0523f32f64c761741a94d338d1af83fb, type: 3}
     Volume: 1
-    SpatialBlend: 1
-    Loop: 0
-    Source: {fileID: 0}
-  - Name: PlayerEffect
-    Clip: {fileID: 8300000, guid: b6a32400e9c6bdf4d9b9bc445232fc9e, type: 3}
-    Volume: 0.1
-    SpatialBlend: 1
-    Loop: 1
-    Source: {fileID: 0}
-  - Name: PlayerMovement
-    Clip: {fileID: 8300000, guid: fda58315dfcd6e9439ddf457ecf19545, type: 3}
-    Volume: 1
-    SpatialBlend: 1
-    Loop: 0
-    Source: {fileID: 0}
-  - Name: Menu
-    Clip: {fileID: 8300000, guid: 5e30d587ea0cc1d4c83336dffd99305d, type: 3}
-    Volume: 0.5
-    SpatialBlend: 1
-    Loop: 1
-    Source: {fileID: 0}
-  - Name: MenuLoop
-    Clip: {fileID: 8300000, guid: 7ce4f1669dacd654bbef5a7c4cdb6117, type: 3}
-    Volume: 1
-    SpatialBlend: 1
-    Loop: 0
-    Source: {fileID: 0}
-  - Name: CellDown
-    Clip: {fileID: 8300000, guid: 2c695e9335d9be34eafd262822cb4d40, type: 3}
-    Volume: 0.3
-    SpatialBlend: 1
-    Loop: 0
-    Source: {fileID: 0}
-  - Name: CellUp
-    Clip: {fileID: 8300000, guid: 92b38104fc4e261489c2c097e36b7911, type: 3}
-    Volume: 0.3
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}

@@ -73,7 +73,7 @@ public class Number : MonoBehaviour
 
 	public void OnPlayerCollision(Number other, Direction collisionSide)
 	{
-		string soundToPlay = SoundNames.ValidHorizontalMovement;
+		string soundToPlay = SoundNames.Interaction_Horizontal;
 		switch (collisionSide)
 		{
 			case Direction.UP:
@@ -82,12 +82,12 @@ public class Number : MonoBehaviour
 				{
 					other.DecimalValue += DecimalValue;
 					DecimalValue = 0;
-					soundToPlay = SoundNames.ValidVerticalMovement;
+					soundToPlay = SoundNames.Interaction_Vertical;
 					animator.Play(collisionSide == Direction.DOWN ? "UpEffect" : "DownEffect", 0);
 				}
 				else
 				{
-					soundToPlay = SoundNames.InvalidOperation;
+					soundToPlay = SoundNames.Invalid_Action;
 				}
 
 				break;
