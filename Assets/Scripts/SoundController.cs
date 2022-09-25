@@ -43,11 +43,10 @@ public class SoundController : MonoBehaviour
 
     private void Save()
     {
-        if (mixer == null)
+        if (volumeSlider == null)
             return;
-
-        if (mixer.GetFloat(MusicVolumeParameter, out float value))
-            PlayerPrefs.SetFloat(MusicVolumeParameter, value);
+        
+        PlayerPrefs.SetFloat(MusicVolumeParameter, volumeSlider.value);
     }
 
 }
