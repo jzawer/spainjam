@@ -47,16 +47,16 @@ MonoBehaviour:
   mixer: {fileID: 24300002, guid: be97831e904a5c548b94af8de314c710, type: 2}
   Sounds:
   - Name: UnresolvedGamePlay
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 7db755478a2b0764d96651a36a4bb0d0, type: 3}
     Volume: 1
     SpatialBlend: 1
-    Loop: 0
+    Loop: 1
     Source: {fileID: 0}
   - Name: ResolvedGamePlay
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: caf35904a6c990045a77871c6a496689, type: 3}
     Volume: 1
     SpatialBlend: 1
-    Loop: 0
+    Loop: 1
     Source: {fileID: 0}
   - Name: StartGame
     Clip: {fileID: 8300000, guid: ad8dda6fa03b1ba4eb6475c01829d88e, type: 3}
@@ -107,8 +107,8 @@ MonoBehaviour:
     Loop: 0
     Source: {fileID: 0}
   - Name: Menu
-    Clip: {fileID: 8300000, guid: 4e1f520cc1516db40988203806809f5d, type: 3}
-    Volume: 1
+    Clip: {fileID: 8300000, guid: 5e30d587ea0cc1d4c83336dffd99305d, type: 3}
+    Volume: 0.5
     SpatialBlend: 1
     Loop: 1
     Source: {fileID: 0}

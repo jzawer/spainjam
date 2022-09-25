@@ -90,19 +90,23 @@ public class MusicManager : MonoBehaviour
 		sound.Source.Stop();
 	}
 
-	public void DOFadeOutTo(string offSound, string onSound, float duration)
+	public void ChangeClipTo(string offSound, string onSound, float duration)
 	{
 		Sound offMusic = Find(offSound);
 		Sound onMusic = Find(onSound);
 
 		if (offMusic == null || offMusic.Source == null) return;
 
-		offMusic.Source.DOFade(0, duration).OnComplete(() => {
+		onMusic.Source.time = offMusic.Source.time;
+		offMusic.Source.Stop();
+		onMusic.Source.Play();
+
+		/*offMusic.Source.DOFade(0, duration).OnComplete(() => {
 			offMusic.Source.Stop();
 			if (onMusic == null || onMusic.Source == null) return;
 			onMusic.Source.volume = 0;
 			onMusic.Source.Play();
 			onMusic.Source.DOFade(onMusic.Volume, duration);
-		});
+		});*/
 	}
 }

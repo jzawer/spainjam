@@ -17,7 +17,6 @@ public class MenuController : MonoBehaviour
             musicManager.Play(SoundNames.Menu);
     }
 
-
     public void StartGame()
     {
         HideMenu();
