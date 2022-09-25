@@ -267,6 +267,7 @@ public class Board : MonoBehaviour
 
 		if (Player.GetComponent<PlayerState>().DecimalValue == 4)
 		{
+			musicManager.Play(SoundNames.Player_Get_100);
 			musicManager.ChangeClipTo(SoundNames.Gameplay_UnresolvedLoop, SoundNames.Gameplay_ResolvedLoop, 1f);
 		} else
 		{

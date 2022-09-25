@@ -56,7 +56,7 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: 2899099b4075d4d47b4d1d7654b67439, type: 3}
     Volume: 1
     SpatialBlend: 1
-    Loop: 0
+    Loop: 1
     Source: {fileID: 0}
   - Name: Interaction_Horizontal
     Clip: {fileID: 8300000, guid: 6f21cb06b518d6f4dbdee7a8739758b3, type: 3}
@@ -140,17 +140,17 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: aa80a3fb587043942995854a46b4b7c5, type: 3}
     Volume: 1
     SpatialBlend: 1
-    Loop: 0
+    Loop: 1
     Source: {fileID: 0}
   - Name: Gameplay_UnresolvedLoop
     Clip: {fileID: 8300000, guid: 02e9143111ee004458896d0b15ea4d84, type: 3}
     Volume: 1
     SpatialBlend: 1
-    Loop: 0
+    Loop: 1
     Source: {fileID: 0}
   - Name: Gameplay_ResolvedLoop
     Clip: {fileID: 8300000, guid: 0523f32f64c761741a94d338d1af83fb, type: 3}
     Volume: 1
     SpatialBlend: 1
-    Loop: 0
+    Loop: 1
     Source: {fileID: 0}
