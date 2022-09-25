@@ -71,33 +71,34 @@ public class Number : MonoBehaviour
 		UpdateVisuals();
 	}
 
-	public void OnPlayerCollision(Number other, CollisionSide collisionSide)
+	public void OnPlayerCollision(Number other, Direction collisionSide)
 	{
 		string soundToPlay = SoundNames.ValidHorizontalMovement;
 		switch (collisionSide)
 		{
-			case CollisionSide.VERTICAL:
+			case Direction.UP:
+			case Direction.DOWN:
 				if (other.DecimalValue + DecimalValue <= 7)
 				{
 					other.DecimalValue += DecimalValue;
 					DecimalValue = 0;
 					soundToPlay = SoundNames.ValidVerticalMovement;
+					animator.Play(collisionSide == Direction.DOWN ? "UpEffect" : "DownEffect", 0);
 				}
 				else
 				{
 					soundToPlay = SoundNames.InvalidOperation;
-					Debug.Log("Invalid operation");
 				}
 
 				break;
-			case CollisionSide.LEFT:
+			case Direction.RIGHT:
 				Digits[0] = Digits[0] == 1 ? 0 : 1;
 
 				other.Digits[2] = other.Digits[2] == 1 ? 0 : 1;
 
 				animator.Play("LeftEffect", 0);
 				break;
-			case CollisionSide.RIGHT:
+			case Direction.LEFT:
 				Digits[2] = Digits[2] == 1 ? 0 : 1;
 
 				other.Digits[0] = other.Digits[0] == 1 ? 0 : 1;

@@ -291,7 +291,7 @@ public class Board : MonoBehaviour
 		}
 		else
 		{
-			nextMovementCell.cell.NumberComponent.OnPlayerCollision(Player.GetComponentInChildren<Number>(), nextMovementCell.collisionSide);
+			nextMovementCell.cell.NumberComponent.OnPlayerCollision(Player.GetComponentInChildren<Number>(), nextMovementCell.direction);
 			ToggleMusic();
 		}
 
@@ -333,11 +333,12 @@ public class Board : MonoBehaviour
 	private void UpdateNeighbourState(Cell neighbour, bool up)
     {
 		var animator = neighbour.GetComponent<Animator>();
-		if (animator != null)
-			animator.SetBool("Up", up);
+		if (animator == null) return;
 
-		if (musicManager)
+		if (musicManager && animator.GetBool("Up") != up)
 			musicManager.Play(up ? SoundNames.CellUp : SoundNames.CellDown);
+
+		animator.SetBool("Up", up);
 	}
 }
 
