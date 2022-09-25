@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 public class Board : MonoBehaviour
 {
@@ -271,28 +272,14 @@ public class Board : MonoBehaviour
 		NextMovementCells.RemoveAt(0);
 	}
 
-	private void ResetNeighbours()
-    {
-		currentNeighbours.ForEach(cell =>
-		{
-			var animator = cell.GetComponent<Animator>();
-			if (animator != null)
-			{
-				animator.SetTrigger("Trigger");
-				musicManager.Play(SoundNames.CellDown);
-			}
-		});
-		currentNeighbours.Clear();
-	}
-
 	private void CheckNeighboursCells(Cell cell)
 	{
-		ResetNeighbours();
+		List<Cell> newNeighbours = new List<Cell>();
 		for (int r = -1; r <= 1; r++)
 		{
 			for (int c = -1; c <= 1; c++)
 			{
-				if (r == 0 && c == 0 || (c != 0 && r != 0)) continue;
+				if (r == 0 && c == 0) continue;
 
 				var neighbourRow = cell.Row + c;
 				var neighbourColumn = cell.Column + r;
@@ -306,18 +293,25 @@ public class Board : MonoBehaviour
 
 				if (neighbourCell.value >= 0)
                 {
-					var animator = neighbourCell.GetComponent<Animator>();
-					if (animator != null)
-                    {
-						animator.SetTrigger("Trigger");
-						currentNeighbours.Add(neighbourCell);
-
-						if (musicManager)
-							musicManager.Play(SoundNames.CellUp);
-					}
+					newNeighbours.Add(neighbourCell);
                 }
 			}
 		}
+
+		newNeighbours.ForEach(neighbour => UpdateNeighbourState(neighbour, true));
+		currentNeighbours.Where(neighbour => !newNeighbours.Any(c => c.Row == neighbour.Row && c.Column == neighbour.Column)).ToList().ForEach(neighbour => UpdateNeighbourState(neighbour, false));
+
+		currentNeighbours = newNeighbours;
+	}
+
+	private void UpdateNeighbourState(Cell neighbour, bool up)
+    {
+		var animator = neighbour.GetComponent<Animator>();
+		if (animator != null)
+			animator.SetBool("Up", up);
+
+		if (musicManager)
+			musicManager.Play(up ? SoundNames.CellUp : SoundNames.CellDown);
 	}
 }
 
