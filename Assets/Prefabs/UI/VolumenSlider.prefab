@@ -283,7 +283,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 938609191429061286}
         m_TargetAssemblyTypeName: SoundController, Assembly-CSharp
-        m_MethodName: ChangeVolumne
+        m_MethodName: ChangeVolumen
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

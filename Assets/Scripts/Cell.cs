@@ -39,6 +39,9 @@ public class Cell : MonoBehaviour
 
     private void Start()
     {
+		if (value >= 0)
+			return;
+
         int rand = Random.Range(0, 4) * 90;
         Platform.transform.Rotate(new Vector3(0, rand));
     }
