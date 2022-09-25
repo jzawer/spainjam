@@ -48,6 +48,7 @@ public class Board : MonoBehaviour
 		if (!musicManager) return;
 
 		musicManager.Play(SoundNames.StartGame);
+		musicManager.Play(SoundNames.UnresolvedGamePlay);
 		musicManager.Play(SoundNames.PlayerEffect);
 	}
 
@@ -231,10 +232,10 @@ public class Board : MonoBehaviour
 
 		if (Player.GetComponent<PlayerState>().DecimalValue == 4)
 		{
-			musicManager.DOFadeOutTo(SoundNames.UnresolvedGamePlay, SoundNames.ResolvedGamePlay, 1f);
+			musicManager.ChangeClipTo(SoundNames.UnresolvedGamePlay, SoundNames.ResolvedGamePlay, 1f);
 		} else
 		{
-			musicManager.DOFadeOutTo(SoundNames.ResolvedGamePlay, SoundNames.UnresolvedGamePlay, 1f);
+			musicManager.ChangeClipTo(SoundNames.ResolvedGamePlay, SoundNames.UnresolvedGamePlay, 1f);
 		}
 	}
 
