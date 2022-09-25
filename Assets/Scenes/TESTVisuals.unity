@@ -632,6 +632,22 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 64502124}
+    - target: {fileID: 6509160662741752853, guid: 3ef0ef39b4945f04d9d006e8dd059423, type: 3}
+      propertyPath: m_fontSize
+      value: 1.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509160662741752853, guid: 3ef0ef39b4945f04d9d006e8dd059423, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: f4645c8df22516c4396ecf58d9558f5d, type: 2}
+    - target: {fileID: 6509160662741752853, guid: 3ef0ef39b4945f04d9d006e8dd059423, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 1.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 6509160662741752853, guid: 3ef0ef39b4945f04d9d006e8dd059423, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7119933970116388196, guid: f4645c8df22516c4396ecf58d9558f5d, type: 2}
     - target: {fileID: 6966473369861250708, guid: 3ef0ef39b4945f04d9d006e8dd059423, type: 3}
       propertyPath: m_Name
       value: CellWithGoal
