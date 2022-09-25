@@ -27,6 +27,7 @@ public class Board : MonoBehaviour
 	private bool playerIsMoving;
 	private MusicManager musicManager;
 	private List<Cell> currentNeighbours = new List<Cell>();
+	Animator playerAnimator;
 
 	protected Cell PlayerCell { 
 		get => playerCell;
@@ -41,6 +42,8 @@ public class Board : MonoBehaviour
 
 	private void Start()
 	{
+		playerAnimator = Player.GetComponent<Animator>();
+
 		if (!map || !CellDefault) return;
 
 		musicManager = MusicManager.Instance;
@@ -166,10 +169,14 @@ public class Board : MonoBehaviour
 		if (axisName == AXIS_HORIZONTAL)
 		{
 			newColumn += (int)axisInput;
+
+			cellMovement.direction = axisInput > 0 ? Direction.RIGHT : Direction.LEFT;
 		}
 		else if (axisName == AXIS_VERTICAL)
 		{
 			newRow += (int)axisInput;
+
+			cellMovement.direction = axisInput > 0 ? Direction.UP : Direction.DOWN;
 		}
 
 		cellMovement.collisionSide = axisName == AXIS_VERTICAL ? Number.CollisionSide.VERTICAL : axisInput < 0 ? Number.CollisionSide.RIGHT : Number.CollisionSide.LEFT;
@@ -196,15 +203,33 @@ public class Board : MonoBehaviour
 		Debug.Log($"PlayerCell: {PlayerCell.Row} : {PlayerCell.Column}");
 	}
 
-	private void UpdatePlayer(Cell newCell)
+	private void UpdatePlayer(Cell newCell, Direction moveDirection)
 	{
 		if (playerIsMoving)
 			return;
 
 		Vector3 newPosition = new(newCell.transform.position.x, Player.transform.position.y, newCell.transform.position.z);
 
-		playerIsMoving = true;
-		musicManager.Play(SoundNames.PlayerMovement);
+        #region MOVE PLAYER
+        playerIsMoving = true;
+        switch (moveDirection)
+        {
+            case Direction.RIGHT:
+				playerAnimator.SetTrigger("MoveRight");
+                break;
+            case Direction.LEFT:
+				playerAnimator.SetTrigger("MoveLeft");
+                break;
+            case Direction.UP:
+				playerAnimator.SetTrigger("MoveUp");
+                break;
+            case Direction.DOWN:
+				playerAnimator.SetTrigger("MoveDown");
+                break;
+            default:
+                break;
+        }
+        musicManager.Play(SoundNames.PlayerMovement);
 		Tween playerMoveTween = Player.transform.DOMove(newPosition, PlayerMoveDuration).OnComplete(() =>
 		{
 			playerIsMoving = false;
@@ -228,7 +253,8 @@ public class Board : MonoBehaviour
 					Debug.Log("I need you to be 100!");
 				}
 			}
-			CheckNeighboursCells(newCell);
+            #endregion
+            CheckNeighboursCells(newCell);
 		});
 
 		PlayerCell = newCell;
@@ -261,7 +287,7 @@ public class Board : MonoBehaviour
 		// move Player to new Cell or interact with it (in case of Number)
 		if (nextMovementCell.cell.value < 0)
 		{
-			UpdatePlayer(nextMovementCell.cell);
+			UpdatePlayer(nextMovementCell.cell, nextMovementCell.direction);
 		}
 		else
 		{

@@ -6,4 +6,5 @@ public class CellMovement
 {
     public Cell cell;
     public Number.CollisionSide collisionSide;
+    public Direction direction;
 }
