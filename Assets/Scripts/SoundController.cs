@@ -12,12 +12,12 @@ public class SoundController : MonoBehaviour
     private void Start()
     {
         if (!PlayerPrefs.HasKey(MusicVolumeParameter))
-            Save();
+            ChangeVolumen(1f);
 
         Load();
     }
 
-    public void ChangeVolumne(float sliderValue)
+    public void ChangeVolumen(float sliderValue)
     {
         if (mixer == null)
             return;
@@ -33,7 +33,7 @@ public class SoundController : MonoBehaviour
         if (mixer == null)
             return;
 
-        ChangeVolumne(PlayerPrefs.GetFloat(MusicVolumeParameter));
+        ChangeVolumen(PlayerPrefs.GetFloat(MusicVolumeParameter));
     }
 
     private void Save()

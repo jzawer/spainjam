@@ -212,7 +212,15 @@ public class Board : MonoBehaviour
 			if (newCell.value == CellTypes.Goal)
 			{
 				if (Player.GetComponent<PlayerState>().DecimalValue == 4)
+                {
+					if (musicManager)
+                    {
+						musicManager.Stop(SoundNames.ResolvedGamePlay);
+						musicManager.Play(SoundNames.CompletedGame);
+					}
+
 					FindObjectOfType<ScenesManager>().Win();
+				}
 				else {
 					if (musicManager)
 						musicManager.Play(SoundNames.GoalWithOutCorrectValue);
