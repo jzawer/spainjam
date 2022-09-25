@@ -12,6 +12,8 @@ public class Number : MonoBehaviour
 	int decimalValue;
 	int[] digits = new int[3];
 
+	Animator animator;
+
 	public int DecimalValue
 	{
 		get => decimalValue;
@@ -63,6 +65,8 @@ public class Number : MonoBehaviour
 
 	void Start()
 	{
+		animator = GetComponentInParent<Animator>();
+
 		DecimalValue = initialValue;
 		UpdateVisuals();
 	}
@@ -90,11 +94,15 @@ public class Number : MonoBehaviour
 				Digits[0] = Digits[0] == 1 ? 0 : 1;
 
 				other.Digits[2] = other.Digits[2] == 1 ? 0 : 1;
+
+				animator.Play("LeftEffect", 0);
 				break;
 			case CollisionSide.RIGHT:
 				Digits[2] = Digits[2] == 1 ? 0 : 1;
 
 				other.Digits[0] = other.Digits[0] == 1 ? 0 : 1;
+
+				animator.Play("RightEffect", 0);
 				break;
 			default:
 				break;
