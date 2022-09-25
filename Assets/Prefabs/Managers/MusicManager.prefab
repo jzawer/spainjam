@@ -112,15 +112,21 @@ MonoBehaviour:
     SpatialBlend: 1
     Loop: 1
     Source: {fileID: 0}
+  - Name: MenuLoop
+    Clip: {fileID: 8300000, guid: 7ce4f1669dacd654bbef5a7c4cdb6117, type: 3}
+    Volume: 1
+    SpatialBlend: 1
+    Loop: 0
+    Source: {fileID: 0}
   - Name: CellDown
     Clip: {fileID: 8300000, guid: 2c695e9335d9be34eafd262822cb4d40, type: 3}
-    Volume: 0.1
+    Volume: 0.3
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
   - Name: CellUp
     Clip: {fileID: 8300000, guid: 92b38104fc4e261489c2c097e36b7911, type: 3}
-    Volume: 0.1
+    Volume: 0.3
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}

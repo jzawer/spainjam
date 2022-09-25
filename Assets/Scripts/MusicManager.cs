@@ -10,7 +10,7 @@ public class MusicManager : MonoBehaviour
 	public static MusicManager Instance;
 
 	public AudioMixerGroup mixer;
-	public Sound[] Sounds = new Sound[13]
+	public Sound[] Sounds = new Sound[14]
 	{
 		new Sound(SoundNames.UnresolvedGamePlay),
 		new Sound(SoundNames.ResolvedGamePlay),
@@ -23,6 +23,7 @@ public class MusicManager : MonoBehaviour
 		new Sound(SoundNames.PlayerEffect),
 		new Sound(SoundNames.PlayerMovement),
 		new Sound(SoundNames.Menu),
+		new Sound(SoundNames.MenuLoop),
 		new Sound(SoundNames.CellDown),
 		new Sound(SoundNames.CellUp)
 };
@@ -81,6 +82,17 @@ public class MusicManager : MonoBehaviour
 			sound.Source.Play();
 	}
 
+	public IEnumerator PlayDelayedBySound(string current, string next)
+    {
+		Sound currentSound = Find(current);
+
+		if (currentSound == null || currentSound.Source)
+			yield break;
+
+		yield return new WaitForSeconds(currentSound.Clip.length);
+		this.Play(next);
+	}
+
 	public void Stop(string name)
 	{
 		Sound sound = Find(name);
@@ -95,7 +107,7 @@ public class MusicManager : MonoBehaviour
 		Sound offMusic = Find(offSound);
 		Sound onMusic = Find(onSound);
 
-		if (offMusic == null || offMusic.Source == null) return;
+		if (offMusic == null || offMusic.Source == null || onMusic == null || onMusic.Source == null || onMusic.Source.isPlaying) return;
 
 		onMusic.Source.time = offMusic.Source.time;
 		offMusic.Source.Stop();

@@ -14,7 +14,10 @@ public class MenuController : MonoBehaviour
         musicManager = MusicManager.Instance;
 
         if (musicManager != null)
+        {
             musicManager.Play(SoundNames.Menu);
+            StartCoroutine(musicManager.PlayDelayedBySound(SoundNames.Menu, SoundNames.MenuLoop));
+        }
     }
 
     public void StartGame()
@@ -34,7 +37,10 @@ public class MenuController : MonoBehaviour
         canvas.DOFade(0, .5f).OnComplete(() =>
         {
             if (musicManager != null)
+            {
                 musicManager.Stop(SoundNames.Menu);
+                musicManager.Stop(SoundNames.MenuLoop);
+            }
         });
     }
 }

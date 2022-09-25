@@ -8,11 +8,15 @@ public class SoundController : MonoBehaviour
 {
     public AudioMixer mixer;
     private const string MusicVolumeParameter = "musicVol";
+    public Slider volumeSlider;
 
     private void Start()
     {
         if (!PlayerPrefs.HasKey(MusicVolumeParameter))
+        {
             ChangeVolumen(1f);
+            volumeSlider.value = 1f;
+        }
 
         Load();
     }
@@ -32,8 +36,9 @@ public class SoundController : MonoBehaviour
     {
         if (mixer == null)
             return;
-
-        ChangeVolumen(PlayerPrefs.GetFloat(MusicVolumeParameter));
+        var currentVolume = PlayerPrefs.GetFloat(MusicVolumeParameter);
+        ChangeVolumen(currentVolume);
+        volumeSlider.value = currentVolume;
     }
 
     private void Save()

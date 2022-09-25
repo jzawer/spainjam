@@ -306,6 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: be97831e904a5c548b94af8de314c710, type: 2}
+  volumeSlider: {fileID: 4110960366406400785}
 --- !u!1 &4760355731532272769
 GameObject:
   m_ObjectHideFlags: 0

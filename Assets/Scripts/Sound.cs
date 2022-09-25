@@ -44,4 +44,5 @@ public class SoundNames
 	public const string Menu = "Menu";
 	public const string CellDown = "CellDown";
 	public const string CellUp = "CellUp";
+	public const string MenuLoop = "MenuLoop";
 }
