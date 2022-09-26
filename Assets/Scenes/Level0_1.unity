@@ -279,14 +279,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Board
       objectReference: {fileID: 0}
-    - target: {fileID: 2875392543980515216, guid: 4a8bbaeced7f26647a859fb5b5acbaa3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2875392543980515217, guid: 4a8bbaeced7f26647a859fb5b5acbaa3, type: 3}
-      propertyPath: map
-      value: 
-      objectReference: {fileID: 4900000, guid: 969884b7a963a474ca5e965f81e603ee, type: 3}
     - target: {fileID: 2875392543980515222, guid: 4a8bbaeced7f26647a859fb5b5acbaa3, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -331,10 +323,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6217277522986327992, guid: 4a8bbaeced7f26647a859fb5b5acbaa3, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 195bff7ed10ad744ba743cb68e59a0d5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a8bbaeced7f26647a859fb5b5acbaa3, type: 3}
 --- !u!1 &719324043
