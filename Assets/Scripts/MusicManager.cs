@@ -76,9 +76,9 @@ public class MusicManager : MonoBehaviour
 	{
 		Sound sound = Find(name);
 
-		if (sound == null || sound.Source == null) return;
+        if (sound == null || sound.Source == null) return;
 
-		sound.Source.volume = sound.Volume;
+        sound.Source.volume = sound.Volume;
 
 		if (!sound.Source.isPlaying)
 			sound.Source.Play();

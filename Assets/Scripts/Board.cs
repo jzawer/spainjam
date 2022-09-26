@@ -253,21 +253,21 @@ public class Board : MonoBehaviour
 					Debug.Log("I need you to be 100!");
 				}
 			}
-            #endregion
             CheckNeighboursCells(newCell);
 		});
+        #endregion
 
 		PlayerCell = newCell;
 	}
 
-	private void ToggleMusic()
+	public void ToggleMusic()
 	{
 		if (musicManager == null)
 			return;
 
 		if (Player.GetComponent<PlayerState>().DecimalValue == 4)
 		{
-			musicManager.Play(SoundNames.Player_Get_100);
+			//musicManager.Play(SoundNames.Player_Get_100);
 			musicManager.ChangeClipTo(SoundNames.Gameplay_UnresolvedLoop, SoundNames.Gameplay_ResolvedLoop, 1f);
 		} else
 		{

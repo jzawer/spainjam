@@ -13,6 +13,8 @@ public class Number : MonoBehaviour
 	int[] digits = new int[3];
 
 	Animator animator;
+	MusicManager musicManager;
+	Board board;
 
 	public int DecimalValue
 	{
@@ -66,6 +68,8 @@ public class Number : MonoBehaviour
 	void Start()
 	{
 		animator = GetComponentInParent<Animator>();
+		musicManager = FindObjectOfType<MusicManager>();
+		board = FindObjectOfType<Board>();
 
 		DecimalValue = initialValue;
 		UpdateVisuals();
@@ -74,16 +78,23 @@ public class Number : MonoBehaviour
 	public void OnPlayerCollision(Number other, Direction collisionSide)
 	{
 		string soundToPlay = SoundNames.Interaction_Horizontal;
+		string additionalSoundToPlay = "";
 		switch (collisionSide)
 		{
 			case Direction.UP:
 			case Direction.DOWN:
 				if (other.DecimalValue + DecimalValue <= 7)
 				{
+					if (other.DecimalValue == 4)
+						additionalSoundToPlay = SoundNames.Player_Loose_100;
+
 					other.DecimalValue += DecimalValue;
 					DecimalValue = 0;
 					soundToPlay = SoundNames.Interaction_Vertical;
 					animator.Play(collisionSide == Direction.DOWN ? "UpEffect" : "DownEffect", 0);
+
+					if (other.DecimalValue == 4)
+						additionalSoundToPlay = SoundNames.Player_Get_100;
 				}
 				else
 				{
@@ -92,18 +103,34 @@ public class Number : MonoBehaviour
 
 				break;
 			case Direction.RIGHT:
+				if (other.DecimalValue == 4)
+					additionalSoundToPlay = SoundNames.Player_Loose_100;
+
+				soundToPlay = SoundNames.Interaction_Horizontal;
+
 				Digits[0] = Digits[0] == 1 ? 0 : 1;
 
 				other.Digits[2] = other.Digits[2] == 1 ? 0 : 1;
 
 				animator.Play("LeftEffect", 0);
+
+				if (other.DecimalValue == 4)
+					additionalSoundToPlay = SoundNames.Player_Get_100;
 				break;
 			case Direction.LEFT:
+				if (other.DecimalValue == 4)
+					additionalSoundToPlay = SoundNames.Player_Loose_100;
+				
+				soundToPlay = SoundNames.Interaction_Horizontal;
+
 				Digits[2] = Digits[2] == 1 ? 0 : 1;
 
 				other.Digits[0] = other.Digits[0] == 1 ? 0 : 1;
 
 				animator.Play("RightEffect", 0);
+
+				if (other.DecimalValue == 4)
+					additionalSoundToPlay = SoundNames.Player_Get_100;
 				break;
 			default:
 				break;
@@ -112,9 +139,9 @@ public class Number : MonoBehaviour
 		UpdateDigits(Digits);
 		other.UpdateDigits(other.Digits);
 
-		var musicManager = FindObjectOfType<MusicManager>();
-		if (musicManager)
-			musicManager.Play(soundToPlay);
+		musicManager.Play(soundToPlay);
+		if(additionalSoundToPlay != "")
+			musicManager.Play(additionalSoundToPlay);
 	}
 
 	void UpdateVisuals()

@@ -71,43 +71,43 @@ MonoBehaviour:
     Loop: 0
     Source: {fileID: 0}
   - Name: Invalid_Action
-    Clip: {fileID: 8300000, guid: b2de5e4258778db41991f302cf14f22c, type: 3}
+    Clip: {fileID: 8300000, guid: b4c3b1922cd1c2447bef9e2811652aea, type: 3}
     Volume: 1
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
   - Name: Number_Up
     Clip: {fileID: 8300000, guid: 21a4f54fb37577f42b9e4e1213428709, type: 3}
-    Volume: 1
+    Volume: 0.45
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
   - Name: Number_Down
     Clip: {fileID: 8300000, guid: acbc4e4d53ce41945a44710f1271d4be, type: 3}
-    Volume: 1
+    Volume: 0.45
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
   - Name: Level_Start
-    Clip: {fileID: 8300000, guid: 1b7bb5ea4f38c3641b58be3e9c96ab11, type: 3}
+    Clip: {fileID: 8300000, guid: 4ff8e2ffd043e6a4e8fd0e4bea6227db, type: 3}
     Volume: 1
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
   - Name: Player_Get_100
-    Clip: {fileID: 8300000, guid: a138fdc4bc441c449b563febd32654f1, type: 3}
-    Volume: 1
+    Clip: {fileID: 8300000, guid: 7361529f04642d040bc1ab2f04e2e292, type: 3}
+    Volume: 0.45
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
   - Name: Player_Loose_100
-    Clip: {fileID: 8300000, guid: 4bb6a3095dac753459ba29edaf600a35, type: 3}
-    Volume: 1
+    Clip: {fileID: 8300000, guid: 386bc618c0159e346ac5fdef8732e61e, type: 3}
+    Volume: 0.45
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
   - Name: Level_Completed
-    Clip: {fileID: 8300000, guid: edbc0859188177c45830bea7cff40103, type: 3}
+    Clip: {fileID: 8300000, guid: 6bd3b6c6af16db24ea1a51aa34b57a3e, type: 3}
     Volume: 1
     SpatialBlend: 1
     Loop: 0
@@ -125,32 +125,32 @@ MonoBehaviour:
     Loop: 0
     Source: {fileID: 0}
   - Name: StartMenu_Quit
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 590973e7f6a5eaa4a9eb9661146b74ee, type: 3}
     Volume: 1
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
   - Name: StartMenu_Start
     Clip: {fileID: 8300000, guid: f404bef3b18cc224b9cd2bb3218a4ca0, type: 3}
-    Volume: 1
+    Volume: 0.75
     SpatialBlend: 1
     Loop: 0
     Source: {fileID: 0}
   - Name: StartMenu_Loop
     Clip: {fileID: 8300000, guid: aa80a3fb587043942995854a46b4b7c5, type: 3}
-    Volume: 1
+    Volume: 0.75
     SpatialBlend: 1
     Loop: 1
     Source: {fileID: 0}
   - Name: Gameplay_UnresolvedLoop
-    Clip: {fileID: 8300000, guid: 02e9143111ee004458896d0b15ea4d84, type: 3}
-    Volume: 1
+    Clip: {fileID: 8300000, guid: 7b3e0c019c0420c4c803ea2855166151, type: 3}
+    Volume: 0.75
     SpatialBlend: 1
     Loop: 1
     Source: {fileID: 0}
   - Name: Gameplay_ResolvedLoop
-    Clip: {fileID: 8300000, guid: 0523f32f64c761741a94d338d1af83fb, type: 3}
-    Volume: 1
+    Clip: {fileID: 8300000, guid: a246a40473add774ca37236170b8ae99, type: 3}
+    Volume: 0.75
     SpatialBlend: 1
     Loop: 1
     Source: {fileID: 0}

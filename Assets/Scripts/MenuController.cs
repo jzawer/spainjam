@@ -15,6 +15,8 @@ public class MenuController : MonoBehaviour
 
         if (musicManager != null)
         {
+            Invoke(nameof(StartLoopingMusic), 69f);
+
             musicManager.Play(SoundNames.StartMenu_Start);
             StartCoroutine(musicManager.PlayDelayedBySound(SoundNames.StartMenu_Start, SoundNames.StartMenu_Loop));
         }
@@ -23,13 +25,25 @@ public class MenuController : MonoBehaviour
     public void StartGame()
     {
         HideMenu();
+
+        musicManager.Play(SoundNames.StartMenu_Play);
+
         scenesManager.FadeToLevel(1);
     }
 
-    public void StartCredits()
+    void StartLoopingMusic()
+    {
+        musicManager.Play(SoundNames.StartMenu_Loop);
+    }
+
+    public void ExitGame()
     {
         HideMenu();
-        scenesManager.FadeToLevel(SceneManager.sceneCountInBuildSettings);
+        scenesManager.FadeToLevel(SceneManager.GetActiveScene().buildIndex);
+
+        musicManager.Play(SoundNames.StartMenu_Quit);
+
+        Invoke(nameof(QuitAplication), .5f);
     }
 
     private void HideMenu()
@@ -42,5 +56,10 @@ public class MenuController : MonoBehaviour
                 musicManager.Stop(SoundNames.StartMenu_Loop);
             }
         });
+    }
+
+    void QuitAplication()
+    {
+        Application.Quit();
     }
 }

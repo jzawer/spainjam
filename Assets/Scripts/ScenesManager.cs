@@ -49,7 +49,7 @@ public class ScenesManager : MonoBehaviour
         if (targetBuildIndex < SceneManager.sceneCountInBuildSettings)
             FadeToLevel(targetBuildIndex);
         else
-            FadeToLevel(1);
+            FadeToLevel(0);
     }
 
      public void FadeToLevel(int levelIndex)
