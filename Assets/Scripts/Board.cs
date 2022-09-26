@@ -312,8 +312,10 @@ public class Board : MonoBehaviour
 				var neighbourColumn = cell.Column + r;
 
 				if (neighbourRow < 0 || neighbourRow >= totalRows || neighbourColumn < 0 || neighbourColumn >= totalColumns) continue;
+				var cellObject = BoardGrid[neighbourRow, neighbourColumn];
 
-				var neighbourCell = BoardGrid[neighbourRow, neighbourColumn].GetComponent<Cell>();
+				if (cellObject == null) continue;
+				var neighbourCell = cellObject.GetComponent<Cell>();
 
 				if (neighbourCell == cell)
 					continue;
